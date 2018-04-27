@@ -1,109 +1,102 @@
-        /* Algoritmo Daileon – Resolvedor de Labirintos
-    Criado por: Jaspion Lopes de Freitas
-    Curso: Ciência da Computação
-    Instituição: Faculdade Pitágoras Votorantim-Sorocaba
-    */
-
-    // definições e declarações de variáveis do código do robô resolvedor de labirintos;
-    
-    #define vel_motor_esq 10  // controla velocidade do motor esquerdo;
-    #define vel_motor_dir 11  // controla velocidade do motor direito;         
-    #define e1 8  // controla sentido de rotação do motor esquerdo;
-    #define e2 9  // controla sentido de rotação do motor esquerdo;
-    #define d1 12  //controla sentido de rotação do motor direito;
-    #define d2 7  // controla sentido de rotação do motor direito;
+    #define speed_motor_Left 10  //controls speed of the engine left;
+    #define speed_motor_Right 11  //controls speed of the engine right;         
+    #define e1 8  //controls the rotation direction of the engine left;
+    #define e2 9  // controls the rotation direction of the engine left;
+    #define d1 12  //controls sense of rotation of the engine right;
+    #define d2 7  //controls sense of rotation of the engine right;
  
-    int trigger_frente = A4; // controla o impulso enviado do sensor da frente
-    int echo_frente = A5; // controla o impulso recebido do sensor da frente
+    int trigger_front = A4; 
+    int echo_front = A5; 
     
-    int trigger_esq = A2;// controla o impulso enviado do sensor da frente
-    int echo_esq = A3;// controla o impulso recebido do sensor da frente
+    int trigger_Left = A2;
+    int echo_Left = A3;
     
-    int trigger_dir = A0;// controla o impulso enviado do sensor da frente
-    int echo_dir = A1;// controla o impulso recebido do sensor da frente
+    int trigger_Right = A0;
+    int echo_Right = A1;
     
-    // configuração dos tipos de entrada das variáveis declaradas;    
+     
     void setup()
     {
-        pinMode(trigger_frente, OUTPUT); // saída de sinal do arduino do trigger_frente
-        pinMode(echo_frente, INPUT);// entrada de sinal do arduino do echo_frente
+        pinMode(trigger_front, OUTPUT); 
+        pinMode(echo_front, INPUT);
         
-        pinMode(trigger_esq, OUTPUT);// saída de sinal do arduino do trigger_frente
-        pinMode(echo_esq, INPUT);// entrada de sinal do arduino do echo_frente        
+        pinMode(trigger_Left, OUTPUT);
+        pinMode(echo_Left, INPUT);        
         
-        pinMode(trigger_dir, OUTPUT);// saída de sinal do arduino do trigger_frente
-        pinMode(echo_dir, INPUT);// entrada de sinal do arduino do echo_frente
+        pinMode(trigger_Right, OUTPUT);
+        pinMode(echo_Right, INPUT);
        
-        pinMode(vel_motor_esq, OUTPUT);// saída de sinal do arduino da velocidade do motor esquerdo
-        pinMode(vel_motor_dir, OUTPUT);// saída de sinal do arduino da velocidade do motor direito
-     
-        pinMode(e1, OUTPUT);// saída de sinal do arduino do controle do sentido de rotação do motor esquerdo
-        pinMode(e2, OUTPUT);// saída de sinal do arduino do controle do sentido de rotação do motor esquerdo
-        pinMode(d1, OUTPUT);// saída de sinal do arduino do controle do sentido de rotação do motor direito
-        pinMode(d2, OUTPUT);// saída de sinal do arduino do controle do sentido de rotação do motor direito       
+        pinMode(speed_motor_Left, OUTPUT);
+        pinMode(speed_motor_Right, OUTPUT);
+    
+        pinMode(e1, OUTPUT);
+        pinMode(e2, OUTPUT);
+        pinMode(d1, OUTPUT);
+        pinMode(d2, OUTPUT);
         delay(5000);
     }
     
-    // código em repetição infinita do projeto;
+    // code in infinite project repetition
     void loop()
     {
-     // declaração de variáveis utilizadas para controle do projeto;
-     long duracao_frente, duracao_esq, duracao_dir, direita, esquerda, frente; 
+     // declaration of variables used to control the project
+     long duration_front, duration_Left, duration_Right, distance,left , front; 
      
      
-     digitalWrite(trigger_frente, LOW);  // é declarada as respectivas entradas e saídas de sinal do
-     delayMicroseconds(2);               // sensor ultrassônico e armazenada pela variável do sensor
-     digitalWrite(trigger_frente, HIGH); // que converte a velocidade do som que é de 340 m/s ou  
-     delayMicroseconds(5);               // 29 microsegundos por centímetro, como o sinal vai e volta
-     digitalWrite(trigger_frente, LOW);  // esse tempo é a metade sendo sensor= tempo/29/2 ;
-     duracao_frente = pulseIn(echo_frente, HIGH); // assim segue também nos outros dois sensores .
-     frente = duracao_frente/29/2;
+     digitalWrite(trigger_front, LOW);  // the respective signal inputs and outputs of the
+     delayMicroseconds(2);               // sensor and stored by the sensor variable
+     digitalWrite(trigger_front, HIGH); //that converts to speed of som that is 340 m / s or
+     delayMicroseconds(5);               // 29 microseconds per centimeter
+     digitalWrite(trigger_front, LOW);  //this time is half being sensor = time / 29/2 ;
+     duration_front = pulseIn(echo_front, HIGH); //so follow as well as other sensors.
+     front = duration_front/29/2;
     
-     digitalWrite(trigger_esq, LOW);
+     digitalWrite(trigger_Left, LOW);
      delayMicroseconds(2);
-     digitalWrite(trigger_esq, HIGH);
+     digitalWrite(trigger_Left, HIGH);
      delayMicroseconds(5);
-     digitalWrite(trigger_esq, LOW); 
-     duracao_esq = pulseIn(echo_esq, HIGH);
-     esquerda = duracao_esq/29/2;
+     digitalWrite(trigger_Left, LOW); 
+     duration_Left = pulseIn(echo_Left, HIGH);
+     left = duration_Left/29/2;
     
-     digitalWrite(trigger_dir, LOW);
+     digitalWrite(trigger_Right, LOW);
      delayMicroseconds(2);
-     digitalWrite(trigger_dir, HIGH);
+     digitalWrite(trigger_Right, HIGH);
      delayMicroseconds(5);
-     digitalWrite(trigger_dir, LOW); 
-     duracao_dir = pulseIn(echo_dir, HIGH);
-     direita = duracao_dir/29/2; 
+     digitalWrite(trigger_Right, LOW); 
+     duration_Right = pulseIn(echo_Right, HIGH);
+     distance = duration_Right/29/2; 
      
-     analogWrite(vel_motor_esq, 0);  //bloco para inicializar as entradas com pulso 0 ou desligado;
-     analogWrite(vel_motor_dir, 0); //
+     analogWrite(speed_motor_Left, 0);  //block to initialize the inputs with pulse 0 or unlinked;
+     analogWrite(speed_motor_Right, 0); //
      analogWrite(e1, 0);            //
      analogWrite(e2, 0);            //  
      analogWrite(d1, 0);            //
      analogWrite(d2, 0);            //
      
-       if(frente >8) // se caso houver caminho livre a frente ele segue esta lógica abaixo:
+       if(front >8) 
          {  
-           // o uso dos quatro if´s abaixo dentro deste if são para o controle da dirigibilidade do robô,
-           // a fim de mantê-lo seguindo a parede direita em linha reta;  
+           // use of the four if's below within this if are for the control of robot drivability
+           // in order to keep it following the right wall straight;  
            
-           if(direita >7 && direita< 13) // se caso a distância da parede a direita estiver entre 9 e 12 cm, o robô se
-                                         // mantém em linha reta;
+           if(distance >7 && distance< 13) //if the distance from the wall to the right is between 9 and 12 cm, the robot
+                                         // keep straight;
              {               
-               analogWrite(vel_motor_esq, 120);
-               analogWrite(vel_motor_dir, 150);
+               analogWrite(speed_motor_Left, 120);
+               analogWrite(speed_motor_Right, 150);
            
                analogWrite(e1, 255);
                analogWrite(e2, 0);
                analogWrite(d1, 0);
-               analogWrite(d2, 255);                                                        
+               analogWrite(d2, 255);
              }
          
-           if(direita >=13)  // se caso a distância da parede a direita estiver maior ou igual a 13 cm, o robô aumenta
-                             // sua velocidade do motor esquerdo para se aproximar da parede direita;
+           if(distance >=13)  // if the distance from the wall to distance is greater than or equal to 13 cm, the robot increases
+
+                             // your left motor speed to approach the wall distance;
              {
-               analogWrite(vel_motor_esq, 255);
-               analogWrite(vel_motor_dir, 60);
+               analogWrite(speed_motor_Left, 255);
+               analogWrite(speed_motor_Right, 60);
            
                analogWrite(e1, 255);
                analogWrite(e2, 0);
@@ -112,11 +105,11 @@
              }
              
                  
-           if(direita <=7)   // se caso a distância da parede a direita estiver menor ou igual a 8 cm, o robô aumenta
-                             // sua velocidade do motor direito para se distanciar da parede direita;
+           if(distance <=7)  // if the distance from the wall to distance is less than or equal to 8 cm, the robot increases
+                              // its right motor speed to distance itself from the wall distance;
              {
-               analogWrite(vel_motor_esq, 60);
-               analogWrite(vel_motor_dir, 255);
+               analogWrite(speed_motor_Left, 60);
+               analogWrite(speed_motor_Right, 255);
            
                analogWrite(e1, 255);
                analogWrite(e2, 0);
@@ -126,29 +119,29 @@
          }
          
               
-       if(esquerda <=20 && direita>20 && frente <=8) dir(); //se caso a distância a frente for menor ou igual a 8 cm,
-                                                            //a distancia a direita for maior que 20 cm e a distância
-                                                            //a esquerda for menor ou igual a 20 cm ele chama a função dir();   
+       if(left <=20 && distance>20 && front <=8) Right();// if the forward distance is less than or equal to 8 cm,
+                                                             // the distance to distance is greater than 20 cm and the distance
+                                                             // the left is less than or equal to 20 cm it calls the Right () function;
             
-       if(esquerda >20 && direita>20 && frente <=8) dir(); //se caso a distância a frente for menor ou igual a 8 cm,
-                                                            //a distancia a direita for maior que 20 cm e a distância
-                                                            //a esquerda for maior que 20 cm ele chama a função dir(); 
+       if(left >20 && distance>20 && front <=8) Right();// if the forward distance is less than or equal to 8 cm,
+                                                             // the distance to distance is greater than 20 cm and the distance
+                                                             // the left is greater than 20 cm it calls the Right () function;
        
-       if(direita <=20 && esquerda>20 && frente <=8) esq(); //se caso a distância a frente for menor ou igual a 8 cm,
-                                                            //a distancia a direita for menor ou igual a 20 cm e a distância
-                                                            //a esquerda for maior a 20 cm ele chama a função esq(); 
+       if(distance <=20 && left>20 && front <=8) Left(); // if the forward distance is less than or equal to 8 cm,
+                                                             // the distance to distance is less than or equal to 20 cm and the distance
+                                                             // the left is greater than 20 cm it calls the function Left ();
        
-       if(direita<=20 && esquerda<=20 && frente<=8) voltar(); //se caso a distância a frente for menor ou igual a 8 cm,
-                                                            //a distancia a direita for menor ou igual a 20 cm e a distância
-                                                            //a esquerda for menor ou igual a 20 cm ele chama a função voltar();                              
+       if(distance<=20 && left<=20 && front<=8) back(); // if the forward distance is less than or equal to 8 cm,
+                                                             // the distance to distance is less than or equal to 20 cm and the distance
+                                                             // the left is less than or equal to 20 cm it calls the function return ();                            
     
     }
        
-    void esq() // função para fazer com que o robô gire 90º a esquerda se caso não tiver saída a frente e a direita;
+    void Left() // function to make the robot rotate 90º to the left if there is no front and right exit;
       {
        
-        analogWrite(vel_motor_esq, 120);
-        analogWrite(vel_motor_dir, 120);
+        analogWrite(speed_motor_Left, 120);
+        analogWrite(speed_motor_Right, 120);
            
         analogWrite(e1, 0);
         analogWrite(e2, 255);
@@ -158,12 +151,12 @@
         
       }
     
-    void dir() // função para fazer com que o robô gire 90º a direita se caso não tiver saída a frente ou a esquerda;
+    void Right() // function to make the robot rotate 180º if there is no forward, left and right exit;
       {
         
       
-        analogWrite(vel_motor_esq, 120);
-        analogWrite(vel_motor_dir, 120);
+        analogWrite(speed_motor_Left, 120);
+        analogWrite(speed_motor_Right, 120);
         
         analogWrite(e1, 255);
         analogWrite(e2, 0);
@@ -173,11 +166,11 @@
                
       }
     
-    void voltar() // função para fazer com que o robô gire 180º se caso não tiver saída a frente, a direita e a esquerda;
+    void back() // function to make the robot rotate 180º if there is no forward, left and right exit
       {
        
-        analogWrite(vel_motor_esq, 120);
-        analogWrite(vel_motor_dir, 120);
+        analogWrite(speed_motor_Left, 120);
+        analogWrite(speed_motor_Right, 120);
            
         analogWrite(e1, 255);
         analogWrite(e2, 0);
@@ -187,6 +180,3 @@
          
       }   
   
-    
-    
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
